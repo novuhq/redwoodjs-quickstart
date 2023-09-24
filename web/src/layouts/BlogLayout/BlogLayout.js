@@ -1,9 +1,17 @@
+import {
+  NovuProvider,
+  PopoverNotificationCenter,
+  NotificationBell,
+} from '@novu/notification-center'
+
 import { Link, routes } from '@redwoodjs/router'
 
 import { useAuth } from 'src/auth'
 
 const BlogLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
+  const SUBSCRIBER_ID = process.env.REDWOOD_ENV_SUBSCRIBER_ID
+  const APPLICATION_IDENTIFIER = process.env.REDWOOD_ENV_APPLICATION_IDENTIFIER
 
   return (
     <>
@@ -18,6 +26,21 @@ const BlogLayout = ({ children }) => {
         </h1>
         <nav>
           <ul className="relative flex items-center font-light">
+            <li>
+              <NovuProvider
+                subscriberId={SUBSCRIBER_ID}
+                applicationIdentifier={APPLICATION_IDENTIFIER}
+              >
+                <PopoverNotificationCenter
+                  showUserPreferences={true}
+                  position="top-start"
+                >
+                  {({ unseenCount }) => (
+                    <NotificationBell unseenCount={unseenCount} />
+                  )}
+                </PopoverNotificationCenter>
+              </NovuProvider>
+            </li>
             <li>
               <Link
                 className="py-2 px-4 hover:bg-blue-600 transition duration-100 rounded"

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@novu/node": "^0.19.0",
     "@redwoodjs/api": "6.3.1",
     "@redwoodjs/auth-dbauth-api": "6.3.1",
     "@redwoodjs/graphql-server": "6.3.1"
